@@ -1,0 +1,8 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureFunctionsFuncSkStaffSchedulerApiKey": "BGuetvfs2D7S1OIHmtM4McznHlC20ClU0PO5sWlLykQgAzFu9ccWIw=="
+  }
+}

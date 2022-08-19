@@ -1,0 +1,65 @@
+{
+    "name": "teamsfx-template-tab",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@emotion/react": "^11.10.0",
+        "@emotion/styled": "^11.10.0",
+        "@fluentui/react-northstar": "^0.60.1",
+        "@microsoft/mgt-element": "2.4.1-next.teamsfx.8d56785",
+        "@microsoft/mgt-react": "2.4.1-next.teamsfx.8d56785",
+        "@microsoft/mgt-teamsfx-provider": "2.4.1-next.teamsfx.8d56785",
+        "@microsoft/microsoft-graph-client": "^3.0.1",
+        "@microsoft/teams-js": "^2.0.0",
+        "@microsoft/teamsfx": "^2.0.0-beta.0",
+        "@mui/material": "^5.10.1",
+        "axios": "^0.21.1",
+        "date-fns": "^2.29.2",
+        "immer": "^9.0.15",
+        "notistack": "^2.0.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.3.0",
+        "react-scripts": "^5.0.1",
+        "swr": "^1.3.0",
+        "zustand": "^4.1.0"
+    },
+    "devDependencies": {
+        "@types/date-fns": "^2.6.0",
+        "@types/node": "^12.0.0",
+        "@types/react": "^18.0.17",
+        "@types/react-dom": "^18.0.6",
+        "@types/react-router-dom": "^5.1.7",
+        "cross-env": "^7.0.3",
+        "env-cmd": "^10.1.0",
+        "typescript": "^4.1.2"
+    },
+    "scripts": {
+        "dev:teamsfx": "env-cmd --silent -f .env.teamsfx.local npm run start",
+        "start": "react-scripts start",
+        "install:teamsfx": "npm install --force",
+        "build": "react-scripts build",
+        "build:teamsfx": "cross-env-shell \"env-cmd -f .env.teamsfx.${TEAMS_FX_ENV} npm run build\"",
+        "build:teamsfx:dev": "cross-env TEAMS_FX_ENV=dev npm run build:teamsfx",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "homepage": "."
+}

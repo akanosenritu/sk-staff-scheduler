@@ -1,0 +1,46 @@
+{
+    "solution": {
+        "teamsAppTenantId": "4b776ffd-36ab-4db1-a600-322782d62ac7",
+        "subscriptionId": "ff9588d8-e293-4eea-96ca-e789d0c472ee",
+        "subscriptionName": "Azure サブスクリプション 1",
+        "tenantId": "e77bb700-6a10-407f-84cb-d63235bae5b8",
+        "needCreateResourceGroup": false,
+        "resourceGroupName": "sk-teams-app-tab-schedule",
+        "location": "Japan East",
+        "resourceNameSuffix": "f62d12",
+        "provisionSucceeded": true
+    },
+    "fx-resource-appstudio": {
+        "tenantId": "4b776ffd-36ab-4db1-a600-322782d62ac7",
+        "teamsAppId": "0cf83f63-21ba-4643-b73f-36b2e856dbf8",
+        "teamsAppUpdatedAt": 1660939474785
+    },
+    "fx-resource-identity": {
+        "identityName": "tabssodeve7a2dd",
+        "identityResourceId": "/subscriptions/ff9588d8-e293-4eea-96ca-e789d0c472ee/resourceGroups/sk-teams-app-tab-schedule/providers/Microsoft.ManagedIdentity/userAssignedIdentities/tabssodeve7a2dd",
+        "identityClientId": "9a014349-c376-4c4b-a9ba-6f579c685fd5"
+    },
+    "fx-resource-aad-app-for-teams": {
+        "clientId": "404f7d02-eecc-48b6-b40d-1fc605e36190",
+        "clientSecret": "{{fx-resource-aad-app-for-teams.clientSecret}}",
+        "objectId": "8c6a9a2f-2c74-4a1a-8311-7a3a3115b3ec",
+        "oauth2PermissionScopeId": "50651333-0ed0-4230-9b3b-c3d5b0e947f2",
+        "tenantId": "4b776ffd-36ab-4db1-a600-322782d62ac7",
+        "oauthHost": "https://login.microsoftonline.com",
+        "oauthAuthority": "https://login.microsoftonline.com/4b776ffd-36ab-4db1-a600-322782d62ac7",
+        "applicationIdUris": "api://tabssodeve7a2ddtab.z11.web.core.windows.net/404f7d02-eecc-48b6-b40d-1fc605e36190",
+        "frontendEndpoint": "https://tabssodeve7a2ddtab.z11.web.core.windows.net"
+    },
+    "fx-resource-frontend-hosting": {
+        "domain": "tabssodeve7a2ddtab.z11.web.core.windows.net",
+        "endpoint": "https://tabssodeve7a2ddtab.z11.web.core.windows.net",
+        "indexPath": "/index.html#",
+        "storageResourceId": "/subscriptions/ff9588d8-e293-4eea-96ca-e789d0c472ee/resourceGroups/sk-teams-app-tab-schedule/providers/Microsoft.Storage/storageAccounts/tabssodeve7a2ddtab"
+    },
+    "fx-resource-function": {
+        "functionAppResourceId": "/subscriptions/ff9588d8-e293-4eea-96ca-e789d0c472ee/resourceGroups/sk-teams-app-tab-schedule/providers/Microsoft.Web/sites/tabssodeve7a2ddapi",
+        "functionEndpoint": "https://tabssodeve7a2ddapi.azurewebsites.net"
+    },
+    "fx-resource-cicd": {},
+    "fx-resource-api-connector": {}
+}
