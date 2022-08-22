@@ -6,5 +6,15 @@
     "rootDir": ".",
     "sourceMap": true,
     "strict": false,
-  }
+    "baseUrl": "./",
+    "paths": {
+      "shared/*": [
+        "../../dist/shared/*"
+      ]
+    }
+  },
+  "references": [
+    {"path": "../../shared"}
+  ]
 }
+
