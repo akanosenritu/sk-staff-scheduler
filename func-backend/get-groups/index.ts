@@ -1,4 +1,4 @@
-import {AzureFunction, Context, HttpRequest, HttpResponse} from "@azure/functions"
+import {AzureFunction, HttpResponse} from "@azure/functions"
 import {getAccessToken} from "../utils/msgraph/getAccessToken"
 import {callGraphApi} from "../utils/msgraph/callGraphApi"
 import {Group} from "shared/types/group"
@@ -27,7 +27,7 @@ const httpTrigger: AzureFunction = async function (): Promise<HttpResponse> {
 
   const body: FuncBackendGetGroupsResponse = {
     status: "success",
-    data: groups
+    groups: groups
   }
 
   res.status = 200
