@@ -1,4 +1,4 @@
-import {CosmosDBScheduleItem, Schedule, ScheduleData} from "../types/Schedule"
+import {CosmosDBScheduleItem, Schedule, ScheduleData} from "../types/schedule"
 import {format, utcToZonedTime} from "date-fns-tz"
 
 export const createScheduleItem = (userId: string, data: ScheduleData): CosmosDBScheduleItem => {

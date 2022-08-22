@@ -1,4 +1,3 @@
-
 export type ISOFormattedDateString = string  // ISO-8601
 export type DayString = string  // format: yyyy-MM-dd
 export type DayScheduleStatus = "available" | "notAvailable" | "toBeDetermined"
