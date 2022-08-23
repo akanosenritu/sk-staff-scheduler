@@ -1,0 +1,51 @@
+.rowContainer {
+    display: flex;
+    border-top: 1px solid darkgray;
+    width: 100%;
+}
+.rowContainer:last-child {
+    border-bottom: 1px solid darkgray;
+}
+
+.headerRow {
+    font-weight: bold;
+}
+
+.usernameColumn {
+    width: 300px;
+    flex-shrink: 0;
+    text-overflow: ellipsis;
+    text-align: center;
+    border-left: 1px solid darkgray;
+}
+
+.monthColumn {
+    text-align: center;
+    box-sizing: border-box;
+    border-left: 1px solid darkgray;
+}
+.monthColumn:last-child {
+    border-right: 1px solid darkgray;
+}
+
+.header {
+    font-weight: bold;
+}
+.header.dayColumn {
+    border-top: 1px solid darkgray;
+}
+
+.dayColumn {
+    width: 30px;
+    text-align: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.dayColumn {
+    border-left: 1px solid darkgray;
+}
+
+.dayColumn:last-child {
+    border-right: 1px solid darkgray;
+}
