@@ -12,9 +12,6 @@ export const createScheduleItem = (userId: string, data: ScheduleData): CosmosDB
       updateLogs: [{
         date: nowString,
         updatedWith: data,
-        currentAtTheTime: {
-          data: {}
-        }
       }]
     }
   }
@@ -33,6 +30,6 @@ export const updateSchedule = (oldSchedule: Schedule, data: ScheduleData): Sched
   return {
     current: updateCurrent(oldSchedule.current, data),
     updatedAt: nowString,
-    updateLogs: [...oldSchedule.updateLogs, {date: nowString, updatedWith: data, currentAtTheTime: oldSchedule.current}]
+    updateLogs: [...oldSchedule.updateLogs, {date: nowString, updatedWith: data}]
   }
 }

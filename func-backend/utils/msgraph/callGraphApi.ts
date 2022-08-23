@@ -8,4 +8,8 @@ export const callGraphApi = async<T> (endpoint: string, accessToken: string): Pr
     }
   })
     .then(res => res.json())
+    .then(data => {
+      if (data.error) throw new Error(data.error)
+      return data
+    })
 }

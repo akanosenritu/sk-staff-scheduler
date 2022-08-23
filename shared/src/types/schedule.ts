@@ -10,7 +10,6 @@ export type ScheduleData = {
 export type UpdateLog = {
   date: ISOFormattedDateString,
   updatedWith: ScheduleData,
-  currentAtTheTime: ScheduleData
 }
 
 export type Schedule = {
