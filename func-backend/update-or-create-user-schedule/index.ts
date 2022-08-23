@@ -1,7 +1,8 @@
 import {AzureFunction, Context, HttpRequest, HttpResponse} from "@azure/functions"
 import {CosmosClient} from "@azure/cosmos"
-import {CosmosDBScheduleItem, ScheduleData} from "../types/schedule"
+import {CosmosDBScheduleItem} from "shared/types/schedule"
 import {createScheduleItem, updateSchedule} from "../utils/schedule"
+import {validateScheduleData} from "../validators/validateScheduleData"
 
 const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
 
@@ -21,7 +22,15 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return res
   }
 
-  const incomingScheduleData = req.body as ScheduleData
+  // validate the incoming data
+  const incomingData = req.body as unknown
+  const validationResult = validateScheduleData(incomingData)
+  if (validationResult.result === "failed") {
+    res.status = 400
+    res.body = {error: validationResult.error}
+    return res
+  }
+  const incomingScheduleData = validationResult.validated
 
   // retrieve the user's data
   const item = await cosmosClient

@@ -8,5 +8,8 @@
   },
   "scripts": {
     "build": "tsc"
+  },
+  "dependencies": {
+    "yup": "^0.32.11"
   }
 }
