@@ -4,6 +4,7 @@ import {callGraphApi} from "../utils/msgraph/callGraphApi"
 import {getAccessToken} from "../utils/msgraph/getAccessToken"
 import {User} from "shared/types/user"
 import {CosmosDBScheduleItem} from "shared/types"
+import {FuncBackendGetUserSchedulesByGroupResponse} from "shared/types/funcBackendResponses"
 
 const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
 
@@ -53,10 +54,14 @@ const httpTrigger: AzureFunction = async function (context: Context): Promise<Ht
     .query<CosmosDBScheduleItem>(querySpec)
     .fetchAll()
 
-  res.body = {
+  const body: FuncBackendGetUserSchedulesByGroupResponse = {
+    status: "success",
     schedules: resources,
     users: users
   }
+
+  res.status = 200
+  res.body = body
 
   return res
 }
