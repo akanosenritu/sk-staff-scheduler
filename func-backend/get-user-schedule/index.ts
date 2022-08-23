@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest, HttpResponse } from "@azure/functions"
 import { CosmosClient } from "@azure/cosmos"
+import {createScheduleItem} from "../utils/schedule"
 
 const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
 
@@ -26,9 +27,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     .item(userId)
 
   const data = await item.read()
+
+  // if item is not found, create a new one
   if (data.statusCode === 404) {
-    res.body = {error: "not found"}
-    res.status = 404
+    res.body = createScheduleItem(userId, {data: {}})
+    res.status = 200
     return res
   }
 
