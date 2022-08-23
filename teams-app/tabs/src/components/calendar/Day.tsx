@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Typography } from "@mui/material"
-import { format, formatISO, getDate, isToday, isBefore } from "date-fns"
+import { format, getDate, isToday, isBefore } from "date-fns"
 import ja from "date-fns/locale/ja"
 import { DayScheduleStatus, getNextStatus, useDaySchedulesStore } from "./useDaySchedulesStore"
 
@@ -18,9 +18,9 @@ const getBackgroundColor = (status: DayScheduleStatus, beforeToday: boolean) => 
 
 const DayScheduleStatusDisplay = (props: {status: DayScheduleStatus}) => {
   return <Box sx={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%", "&>img": {width: "60%"}, mt: 1}}>
-    {props.status === "available" &&  <img src="circle.png" />}
-    {props.status === "notAvailable" && <img src="cross.png" />}
-    {props.status === "toBeDetermined" && <img src="triangle.png" />}
+    {props.status === "available" &&  <img src="circle.png" alt={"available"} />}
+    {props.status === "notAvailable" && <img src="cross.png" alt={"not available"}/>}
+    {props.status === "toBeDetermined" && <img src="triangle.png" alt={"to be determined"} />}
   </Box>
 }
 
@@ -42,7 +42,7 @@ export const DayContainer = (props: {children: React.ReactNode, isHeader?: boole
 }
 
 export const Day = (props: {day: Date, showMonth?: boolean}) => {
-  const dayString = React.useMemo(() => formatISO(props.day), [props.day])
+  const dayString = React.useMemo(() => format(props.day, "yyyy-MM-dd"), [props.day])
   const beforeToday = React.useMemo(() => isBefore(props.day, new Date()), [props.day])
   const {status, update} = useDaySchedulesStore(state => ({status: state.daySchedules[dayString], update: state.updateDaySchedule}))
   const onClick = () => {
