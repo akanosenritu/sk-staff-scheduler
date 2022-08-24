@@ -31,8 +31,9 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: 'yarn install'
-      - name: build shared
-        id: BuildShared
-        uses: Borales/actions-yarn@v3
-        with:
-          cmd: 'workspace shared build'
+      - name: Build shared
+        run: 'yarn workspace shared build'
+      - name: Build nextjs
+        run: 'yarn workspace nextjs build'
+  # Deploy job
+  
