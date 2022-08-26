@@ -1,5 +1,4 @@
-import {CosmosDBScheduleItem, DayScheduleStatus} from "shared/types/schedule"
-import {User} from "shared/types/user"
+import {CosmosDBScheduleItem, DayScheduleStatus, User} from "shared/dist/types"
 import styles from "./row.module.css"
 import clsx from "clsx"
 

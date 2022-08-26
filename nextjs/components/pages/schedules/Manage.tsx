@@ -3,7 +3,7 @@ import {GroupSelector} from "../../schedules/groups/GroupSelector"
 import {RangeSelector} from "../../schedules/RangeSelector"
 import {useUser} from "../../../hooks/useUser"
 import {useState} from "react"
-import {Group} from "shared/types/group"
+import {Group} from "shared/dist/types"
 import {DisplaySchedulesByGroup} from "../../schedules/DisplaySchedulesByGroup"
 import {addDays} from "date-fns"
 import {DateRange} from "../../../types/dateRange"
@@ -23,7 +23,6 @@ export const Manage = () => {
     </Box>
   }
 
-  console.log(range)
   return <Stack spacing={3} direction={"column"}>
     <Box>
       <Stack spacing={1} direction={{xs: "column", "md": "row"}} sx={{alignItems: "flex-start"}}>

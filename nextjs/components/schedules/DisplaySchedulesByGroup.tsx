@@ -1,16 +1,13 @@
 import {Box, Typography} from "@mui/material"
-import {FuncBackendGetUserSchedulesByGroupResponse} from "shared/types/funcBackendResponses"
 import useSwr from "swr"
 import {DisplaySchedulesTitle} from "./Title"
-import {Group} from "shared/types/group"
 import {Description} from "./Description"
 import {ScheduleRow} from "./schedule/ScheduleRow"
-import {CosmosDBScheduleItem} from "shared/types/schedule"
-import {User} from "shared/types/user"
 import {useMemo} from "react"
 import {DateRange} from "../../types/dateRange"
 import {eachDayOfInterval, format} from "date-fns"
 import {HeaderRow} from "./schedule/HeaderRow"
+import {CosmosDBScheduleItem, FuncBackendGetUserSchedulesByGroupResponse, Group, User} from "shared/dist/types"
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 

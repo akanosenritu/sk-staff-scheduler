@@ -1,10 +1,9 @@
 import {Box, Button, Checkbox, CircularProgress, FormControl, FormControlLabel} from "@mui/material"
-import {FuncBackendGetGroupsResponse} from "shared/types/funcBackendResponses"
 import useSwr from "swr"
 import {SettingsTitle} from "../Title"
 import {ChangeEvent, useMemo, useState} from "react"
 import {Description} from "../Description"
-import {Group} from "shared/types/group"
+import {Group, FuncBackendGetGroupsResponse} from "shared/dist/types"
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 

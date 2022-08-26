@@ -1,7 +1,7 @@
 {
   "name": "shared",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.7.4"
@@ -11,5 +11,8 @@
   },
   "dependencies": {
     "yup": "^0.32.11"
+  },
+  "exports": {
+    "./types": "./dist/types/index.js"
   }
 }

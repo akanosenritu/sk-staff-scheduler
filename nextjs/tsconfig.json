@@ -13,19 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": "./",
-    "paths": {
-      "shared/*": [
-        "../dist/shared/*"
-      ]
-    }
+    "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
-  "references": [
-    {
-      "path": "../shared"
-    }
-  ]
+  "exclude": ["node_modules"]
 }

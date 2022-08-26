@@ -10,3 +10,4 @@ build
 .fx/states/state.local.json
 .idea
 dist
+.vercel

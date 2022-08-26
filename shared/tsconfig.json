@@ -4,9 +4,10 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "outDir": "../dist/shared",
+    "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
-    "composite": true
+    "composite": true,
+    "sourceMap": true
   }
 }

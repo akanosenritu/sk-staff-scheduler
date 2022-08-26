@@ -1,6 +1,6 @@
 import {NextApiHandler} from "next"
 import {callGetOnBackend} from "./callBackend"
-import {FuncBackendGetGroupsResponse} from "shared/types/funcBackendResponses"
+import {FuncBackendGetGroupsResponse} from "shared/dist/types/funcBackendResponses"
 import {unstable_getServerSession} from "next-auth/next"
 import {nextAuthOptions} from "../auth/[...nextauth]"
 
