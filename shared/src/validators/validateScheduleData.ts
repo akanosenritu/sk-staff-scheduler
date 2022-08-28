@@ -1,6 +1,6 @@
 import {createFailedResult, ValidationResult} from "./validationResult"
 import {hasProperty, isObject} from "./utils"
-import {ScheduleData} from "shared/dist/types"
+import {ScheduleData} from "../types"
 
 export const validateScheduleData = (input: unknown): ValidationResult<ScheduleData> => {
   if (!input) return createFailedResult("no data was given")
