@@ -1,8 +1,8 @@
 import {AzureFunction, Context, HttpRequest, HttpResponse} from "@azure/functions"
 import {CosmosClient} from "@azure/cosmos"
-import {CosmosDBScheduleItem} from "shared/types/schedule"
 import {createScheduleItem, updateSchedule} from "../utils/schedule"
 import {validateScheduleData} from "../validators/validateScheduleData"
+import {CosmosDBScheduleItem} from "shared/dist/types"
 
 const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
 

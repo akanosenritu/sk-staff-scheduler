@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es6",
     "outDir": "dist",
     "rootDir": ".",
@@ -12,7 +12,8 @@
       "shared/*": [
         "../dist/shared/*"
       ]
-    }
+    },
+    "moduleResolution": "Node"
   },
   "references": [
     {"path": "../shared"}

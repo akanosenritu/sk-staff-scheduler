@@ -2,9 +2,7 @@ import {AzureFunction, Context, HttpResponse} from "@azure/functions"
 import {CosmosClient, SqlQuerySpec} from "@azure/cosmos"
 import {callGraphApi} from "../utils/msgraph/callGraphApi"
 import {getAccessToken} from "../utils/msgraph/getAccessToken"
-import {User} from "shared/types/user"
-import {CosmosDBScheduleItem} from "shared/types"
-import {FuncBackendGetUserSchedulesByGroupResponse} from "shared/types/funcBackendResponses"
+import {CosmosDBScheduleItem, FuncBackendGetUserSchedulesByGroupResponse, User} from "shared/dist/types"
 
 const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
 

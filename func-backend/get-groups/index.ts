@@ -1,9 +1,7 @@
 import {AzureFunction, HttpResponse} from "@azure/functions"
 import {getAccessToken} from "../utils/msgraph/getAccessToken"
 import {callGraphApi} from "../utils/msgraph/callGraphApi"
-import {Group} from "shared/types/group"
-import {User} from "shared/types/user"
-import {FuncBackendGetGroupsResponse} from "shared/types/funcBackendResponses"
+import {FuncBackendGetGroupsResponse, Group, User} from "shared/dist/types"
 
 const httpTrigger: AzureFunction = async function (): Promise<HttpResponse> {
   const res: HttpResponse = {
