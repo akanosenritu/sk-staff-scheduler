@@ -1,10 +1,13 @@
 import {AzureFunction, Context, HttpRequest, HttpResponse} from "@azure/functions"
 import {CosmosClient} from "@azure/cosmos"
-import {CosmosDBScheduleItem} from "shared/dist/types"
 import {createScheduleItem, updateSchedule} from "shared/dist/utils/schedule"
 import {validateScheduleData} from "shared/dist/validators/validateScheduleData"
-
-const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
+import {getEnvironmentVariable} from "../environmentVariables"
+import {
+  createUserScheduleItem,
+  getUserScheduleItem,
+  replaceUserScheduleItem
+} from "shared/dist/utils/cosmosdb/schedules"
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<HttpResponse> {
   const res: HttpResponse = {
@@ -32,24 +35,34 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   }
   const incomingScheduleData = validationResult.validated
 
-  // retrieve the user's data
-  const item = await cosmosClient
-    .database("schedules")
-    .container("Container")
-    .item(userId)
-
-  const oldData = await item.read()
-  if (oldData.statusCode === 404) {
-    const newData = createScheduleItem(userId, incomingScheduleData)
-    const createdItem = await cosmosClient.database("schedules").container("Container")
-      .items
-      .create(newData)
-    res.body = createdItem.resource
+  // get the environment variables required to run this function
+  let connectionString
+  try {
+    connectionString = getEnvironmentVariable("AzureCosmosDBConnectionString")
+  } catch (e) {
+    res.status = 500
+    res.body = {error: e}
     return res
   }
 
-  const updatedItem = await item.replace<CosmosDBScheduleItem>({id: userId, schedule: updateSchedule(oldData.resource.schedule, incomingScheduleData)})
-  res.body = updatedItem.resource
+  const client = new CosmosClient(connectionString)
+
+  // retrieve the user's data
+  const getItemResponse = await getUserScheduleItem(client, userId)
+
+  // if no data was found, create a new one.
+  if (getItemResponse.statusCode === 404) {
+    const newData = createScheduleItem(userId, incomingScheduleData)
+    const createItemResponse = await createUserScheduleItem(client, newData)
+    res.body = createItemResponse.resource
+    res.status = 201
+    return res
+  }
+
+  // if data was found, replace the old one with the new one
+  const replaceItemResponse = await replaceUserScheduleItem(client, userId, {id: userId, schedule: updateSchedule(getItemResponse.resource.schedule, incomingScheduleData)})
+  res.body = replaceItemResponse.resource
+  res.status = 200
   return res
 }
 

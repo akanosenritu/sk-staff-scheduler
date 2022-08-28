@@ -1,8 +1,8 @@
 import {AzureFunction, Context, HttpRequest, HttpResponse} from "@azure/functions"
-import {CosmosClient} from "@azure/cosmos"
 import {createScheduleItem} from "shared/dist/utils/schedule"
-
-const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
+import {getEnvironmentVariable} from "../environmentVariables"
+import {getUserScheduleItem} from "shared/dist/utils/cosmosdb/schedules"
+import {CosmosClient} from "@azure/cosmos"
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<HttpResponse> {
   const res: HttpResponse = {
@@ -20,13 +20,19 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return res
   }
 
-  // retrieve the user's data
-  const item = await cosmosClient
-    .database("schedules")
-    .container("Container")
-    .item(userId)
+  // get the environment variables required to run this function
+  let connectionString
+  try {
+    connectionString = getEnvironmentVariable("AzureCosmosDBConnectionString")
+  } catch (e) {
+    res.status = 500
+    res.body = {error: e}
+    return res
+  }
 
-  const data = await item.read()
+  // retrieve the item
+  const client = new CosmosClient(connectionString)
+  const data = await getUserScheduleItem(client, userId)
 
   // if item is not found, create a new one
   if (data.statusCode === 404) {

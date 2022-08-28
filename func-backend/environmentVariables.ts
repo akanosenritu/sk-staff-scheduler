@@ -1,7 +1,8 @@
 export const environmentVariableNamesRequired = [
   "SK_STAFF_SCHEDULER_FUNC_BACKEND_Client_ID",
   "SK_STAFF_SCHEDULER_FUNC_BACKEND_Client_SECRET",
-  "SK_TENANT_ID"
+  "SK_TENANT_ID",
+  "AzureCosmosDBConnectionString",
 ] as const
 
 type EnvironmentVariableName = typeof environmentVariableNamesRequired[number]
