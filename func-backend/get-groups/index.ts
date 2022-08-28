@@ -1,7 +1,8 @@
 import {AzureFunction, HttpResponse} from "@azure/functions"
-import {getAccessToken} from "../utils/msgraph/getAccessToken"
-import {callGraphApi} from "../utils/msgraph/callGraphApi"
 import {FuncBackendGetGroupsResponse, Group, User} from "shared/dist/types"
+import {getAccessToken} from "shared/dist/utils/msgraph/getAccessToken"
+import {callGraphApi} from "shared/dist/utils/msgraph/callGraphApi"
+import {getEnvironmentVariable} from "../environmentVariables"
 
 const httpTrigger: AzureFunction = async function (): Promise<HttpResponse> {
   const res: HttpResponse = {
@@ -12,7 +13,19 @@ const httpTrigger: AzureFunction = async function (): Promise<HttpResponse> {
     }
   }
 
-  const authenticationResult = await getAccessToken()
+  // get the environment variables required to run this function
+  let clientId, clientSecret, authority
+  try {
+    clientId = getEnvironmentVariable("SK_STAFF_SCHEDULER_FUNC_BACKEND_Client_ID")
+    clientSecret = getEnvironmentVariable("SK_STAFF_SCHEDULER_FUNC_BACKEND_Client_SECRET")
+    authority = "https://login.microsoftonline.com/" + getEnvironmentVariable("SK_TENANT_ID")
+  } catch (e) {
+    res.status = 500
+    res.body = {error: e}
+    return res
+  }
+
+  const authenticationResult = await getAccessToken(clientId, clientSecret, authority)
   const apiResponse = await callGraphApi<{value: Group[]}>("/v1.0/groups", authenticationResult.accessToken)
   const groups = apiResponse.value
   await Promise.all(groups.map(group => {

@@ -1,5 +1,5 @@
 import {format, utcToZonedTime} from "date-fns-tz"
-import {CosmosDBScheduleItem, Schedule, ScheduleData} from "shared/dist/types"
+import {CosmosDBScheduleItem, Schedule, ScheduleData} from "../types"
 
 export const createScheduleItem = (userId: string, data: ScheduleData): CosmosDBScheduleItem => {
   const today = utcToZonedTime(new Date(), "Asia/Tokyo")

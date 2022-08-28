@@ -1,8 +1,9 @@
 import {AzureFunction, Context, HttpResponse} from "@azure/functions"
 import {CosmosClient, SqlQuerySpec} from "@azure/cosmos"
-import {callGraphApi} from "../utils/msgraph/callGraphApi"
-import {getAccessToken} from "../utils/msgraph/getAccessToken"
 import {CosmosDBScheduleItem, FuncBackendGetUserSchedulesByGroupResponse, User} from "shared/dist/types"
+import {getEnvironmentVariable} from "../environmentVariables"
+import {getAccessToken} from "shared/dist/utils/msgraph/getAccessToken"
+import {callGraphApi} from "shared/dist/utils/msgraph/callGraphApi"
 
 const cosmosClient = new CosmosClient(process.env["AzureCosmosDBConnectionString"])
 
@@ -24,8 +25,20 @@ const httpTrigger: AzureFunction = async function (context: Context): Promise<Ht
     return res
   }
 
+  // get the environment variables required to run this function
+  let clientId, clientSecret, authority
+  try {
+    clientId = getEnvironmentVariable("SK_STAFF_SCHEDULER_FUNC_BACKEND_Client_ID")
+    clientSecret = getEnvironmentVariable("SK_STAFF_SCHEDULER_FUNC_BACKEND_Client_SECRET")
+    authority = "https://login.microsoftonline.com/" + getEnvironmentVariable("SK_TENANT_ID")
+  } catch (e) {
+    res.status = 500
+    res.body = {error: e}
+    return res
+  }
+
   // call graph api to retrieve the group's members.
-  const {accessToken} = await getAccessToken()
+  const {accessToken} = await getAccessToken(clientId, clientSecret, authority)
   let apiResponse: {value: User[]}
   try {
     apiResponse = await callGraphApi(`/v1.0/groups/${groupId}/members`, accessToken)
