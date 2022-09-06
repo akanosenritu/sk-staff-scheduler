@@ -19,6 +19,9 @@ type Result = {
   error: string,
 } | {
   status: "notFound",
+} | {
+  status: "notSaved",
+  data: CosmosDBScheduleItem,
 })
 
 let cosmosClient

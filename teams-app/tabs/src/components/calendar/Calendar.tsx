@@ -32,7 +32,7 @@ export const Calendar = () => {
   const setDaySchedules = useDaySchedulesStore(state => state.setDaySchedules)
   
   // retrieve the schedule from api
-  const {data, error} = useSWR<CosmosDBScheduleItem>(API_ENDPOINT, fetchGetter, {errorRetryCount: 0, onSuccess: data => {
+  const {data, error} = useSWR<CosmosDBScheduleItem>(API_ENDPOINT, fetchGetter, {errorRetryCount: 3, onSuccess: data => {
     try {
       setDaySchedules(data.schedule.current.data)
     } catch (e) {

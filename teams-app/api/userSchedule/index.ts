@@ -8,6 +8,7 @@ import "isomorphic-fetch"
 import {Context, HttpRequest} from "@azure/functions"
 import {TeamsFx, UserInfo} from "@microsoft/teamsfx"
 import {getUserSchedule, updateOrCreateUserSchedule} from "./lib";
+import {createScheduleItem} from "shared/dist/utils/schedule"
 
 interface Response {
   status: number;
@@ -99,6 +100,21 @@ export default async function run(
   // if the request.method === GET, retrieve the user's schedule.
   if (req.method === "GET") {
     const apiResponse = await getUserSchedule(currentUser.objectId)
+
+    // if it was not found, return a blank schedule item
+    if (apiResponse.statusCode === 404) {
+      const newlyCreatedItem = createScheduleItem(
+        currentUser.objectId,
+        {data: {}}
+      )
+      res.body = {
+        statusCode: 200,
+        status: "notSaved",
+        data: newlyCreatedItem
+      }
+      res.status = 200
+      return res
+    }
     res.body = apiResponse
     res.status = apiResponse.statusCode
   } else if (req.method === "POST") {
