@@ -25,3 +25,13 @@ export const createUserScheduleItem = async (client: CosmosClient, data: CosmosD
     .items
     .create<CosmosDBScheduleItem>(data)
 }
+
+export const upsertUserScheduleItem = async (client: CosmosClient, userId: string, data: CosmosDBScheduleItem): Promise<ItemResponse<CosmosDBScheduleItem>> => {
+  if (userId !== data.id) throw new Error(`given userId and id of data don't match: userId: ${userId}, data's id: ${data.id}`)
+
+  return await client
+    .database("schedules")
+    .container("Container")
+    .items
+    .upsert<CosmosDBScheduleItem>(data)
+}

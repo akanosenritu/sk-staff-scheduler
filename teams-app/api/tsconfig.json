@@ -11,7 +11,8 @@
       "shared/*": [
         "../../dist/shared/*"
       ]
-    }
+    },
+    "skipLibCheck": true,  // needed because of the pointless and intolerable react dependency of teams-fx-sdk
   },
   "references": [
     {"path": "../../shared"}

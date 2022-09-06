@@ -1,8 +1,13 @@
-import { CosmosDBScheduleItem, ScheduleData } from "../types/Schedule"
 import "isomorphic-fetch"
-
-const apiGetUserScheduleUrl = "https://func-sk-staff-scheduler.azurewebsites.net/api/get-user-schedule"
-const apiUpdateOrCreateUserScheduleUrl = " https://func-sk-staff-scheduler.azurewebsites.net/api/update-or-create-user-schedule"
+import {CosmosDBScheduleItem, ScheduleData} from "shared/dist/types"
+import {CosmosClient} from "@azure/cosmos"
+import {getEnvironmentVariable} from "../environmentVariables"
+import {
+  createUserScheduleItem,
+  getUserScheduleItem,
+  replaceUserScheduleItem,
+} from "shared/dist/utils/cosmosdb/schedules"
+import {createScheduleItem, updateSchedule} from "shared/dist/utils/schedule"
 
 type Result = {
   statusCode: number,
@@ -16,55 +21,53 @@ type Result = {
   status: "notFound",
 })
 
-export const getUserSchedule = async (userId: string): Promise<Result> => {
-  const params = new URLSearchParams({userId})
-  const apiResponse = await fetch(apiGetUserScheduleUrl + "?" + params.toString(), {
-    method: "GET",
-    headers: {
-      "x-functions-key": process.env["AzureFunctionsFuncSkStaffSchedulerApiKey"]
-    }
-  })
+let cosmosClient
+try {
+  cosmosClient = new CosmosClient(getEnvironmentVariable("AzureCosmosDBConnectionString"))
+} catch (e) {
+  throw e
+}
 
-  if (apiResponse.ok) {
+export const getUserSchedule = async (userId: string): Promise<Result> => {
+  const itemResponse = await getUserScheduleItem(cosmosClient, userId)
+  if (itemResponse.statusCode === 200) {
     return {
-      status: "success",
       statusCode: 200,
-      data: await apiResponse.json()
+      status: "success",
+      data: itemResponse.resource
     }
-  } else if (apiResponse.status === 404) {
+  } else if (itemResponse.statusCode === 404) {
     return {
-      status: "notFound",
       statusCode: 404,
+      status: "notFound",
     }
   }
   return {
+    statusCode: 500,
     status: "failed",
-    statusCode: apiResponse.status,
-    error: await apiResponse.text(),
+    error: "unknown reason"
   }
 }
 
-export const updateOrCreateUserSchedule = async (userId: string, data: ScheduleData): Promise<Result> => {
-  const params = new URLSearchParams({userId})
-  const apiResponse = await fetch(apiUpdateOrCreateUserScheduleUrl + "?" + params.toString(), {
-    method: "POST",
-    headers: {
-      "x-functions-key": process.env["AzureFunctionsFuncSkStaffSchedulerApiKey"],
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data)
-  })
+export const updateOrCreateUserSchedule = async (userId: string, scheduleData: ScheduleData): Promise<Result> => {
+  const getItemResponse = await getUserScheduleItem(cosmosClient, userId)
 
-  if (apiResponse.ok) {
+  // if no data was found, create a new one.
+  if (getItemResponse.statusCode === 404) {
+    const newData = createScheduleItem(userId, scheduleData)
+    const createItemResponse = await createUserScheduleItem(cosmosClient, newData)
     return {
+      statusCode: 201,
       status: "success",
-      statusCode: 200,
-      data: await apiResponse.json()
+      data: createItemResponse.resource
     }
-  } 
+  }
+
+  // if data was found, replace the old one with the new one
+  const replaceItemResponse = await replaceUserScheduleItem(cosmosClient, userId, {id: userId, schedule: updateSchedule(getItemResponse.resource.schedule, scheduleData)})
   return {
-    status: "failed",
-    statusCode: apiResponse.status,
-    error: await apiResponse.text(),
+    statusCode: 200,
+    status: "success",
+    data: replaceItemResponse.resource
   }
 }

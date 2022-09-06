@@ -3,6 +3,7 @@
   "workspaces": [
     "nextjs",
     "shared",
-    "func-backend"
+    "func-backend",
+    "teams-app/api"
   ]
 }
