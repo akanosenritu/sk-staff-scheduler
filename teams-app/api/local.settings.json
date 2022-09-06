@@ -1,9 +1,0 @@
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "node",
-    "AzureFunctionsFuncSkStaffSchedulerApiKey": "BGuetvfs2D7S1OIHmtM4McznHlC20ClU0PO5sWlLykQgAzFu9ccWIw==",
-    "AzureCosmosDBConnectionString": "AccountEndpoint=https://cosmos-schedule.documents.azure.com:443/;AccountKey=EGKDEsVBz1kkBOHs7RINTowfMQszh2JyRMIkjpsk5NvB2vJIkZplr3ezFzzuBjrBzN3IYwmOigU2DHJfN7wosg==;"
-  }
-}

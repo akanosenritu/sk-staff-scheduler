@@ -11,3 +11,4 @@ build
 .idea
 dist
 .vercel
+local.settings.json
