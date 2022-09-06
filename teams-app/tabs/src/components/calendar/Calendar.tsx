@@ -1,12 +1,12 @@
-import { Box, Button, Typography } from "@mui/material"
-import { formatISO } from "date-fns"
-import { TeamsFx } from "@microsoft/teamsfx"
-import { Week } from "./Week"
-import { convertDaySchedulesToScheduleData, datesToBeDrawn, useDaySchedulesStore } from "./useDaySchedulesStore"
-import { Header } from "./Header"
+import {Box, Button, Typography} from "@mui/material"
+import {formatISO} from "date-fns"
+import {TeamsFx} from "@microsoft/teamsfx"
+import {Week} from "./Week"
+import {convertDaySchedulesToScheduleData, datesToBeDrawn, useDaySchedulesStore} from "./useDaySchedulesStore"
+import {Header} from "./Header"
 import useSWR from "swr"
-import { CosmosDBScheduleItem, ScheduleData } from "../../types/Schedule"
-import { useSnackbar } from "notistack"
+import {useSnackbar} from "notistack"
+import {CosmosDBScheduleItem, ScheduleData} from "shared/dist/types"
 
 const teamsfx = new TeamsFx()
 
@@ -27,7 +27,7 @@ const fetchGetter = async (url: string) => {
   return (await res.json()).data
 }
 
-export const Calendar = (props: {}) => {
+export const Calendar = () => {
   const daySchedules = useDaySchedulesStore(state => state.daySchedules)
   const setDaySchedules = useDaySchedulesStore(state => state.setDaySchedules)
   
@@ -65,7 +65,7 @@ export const Calendar = (props: {}) => {
     }
   }
 
-  if (error) return <Box>読み込みに失敗しました。</Box>
+  if (error) return <Box>読み込みに失敗しました。{JSON.stringify(error)}</Box>
   if (!data) return <Box>読込中...</Box>
   return <Box sx={{"&>.MuiBox-root": {mb: 2}, mx: 1, width: "100%"}}>
     <Box>

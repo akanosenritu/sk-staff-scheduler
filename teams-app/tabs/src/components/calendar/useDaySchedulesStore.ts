@@ -1,7 +1,7 @@
 import create from "zustand"
 import produce from "immer"
 import {addDays, addWeeks, formatISO, startOfWeek, endOfWeek, eachDayOfInterval} from "date-fns"
-import { DayScheduleStatus as ApiDayScheduleStatus } from "../../types/Schedule"
+import {DayScheduleStatus as APIDayScheduleStatus} from "shared/dist/types"
 
 const NUMBER_OF_WEEKS_TO_BE_DRAWN = 7
 
@@ -25,7 +25,7 @@ const getDatesToBeDrawn = (): {start: Date, end: Date, weeks: {start: Date}[]} =
 
 export const datesToBeDrawn = getDatesToBeDrawn()
 
-export const DayScheduleStatuses = ["available", "notAvailable", "toBeDetermined", "notSet"]
+export const DayScheduleStatuses = ["available", "notAvailable", "toBeDetermined", "notSet"] as const
 export type DayScheduleStatus = typeof DayScheduleStatuses[number]
 
 const nextDict = Object.fromEntries(DayScheduleStatuses.map((status, index) => [status, DayScheduleStatuses[(index+1)%DayScheduleStatuses.length]]))
@@ -38,7 +38,7 @@ type DaySchedules = {
   [dateString: string]: DayScheduleStatus
 }
 
-export const convertDaySchedulesToScheduleData = (from: DaySchedules): {[dayString: string]: ApiDayScheduleStatus} => {
+export const convertDaySchedulesToScheduleData = (from: DaySchedules): {[dayString: string]: APIDayScheduleStatus} => {
   return Object.fromEntries(
     Object.keys(from).map(key => {
       switch (from[key]) {
